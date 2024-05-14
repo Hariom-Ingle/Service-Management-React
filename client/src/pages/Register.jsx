@@ -1,16 +1,16 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-// import { Navigate } from "react-router-dom";
-// import { use } from "../../../server/router/auth-router";
+import { useAuth } from "../store/auth";
 
 export const Register = () => {
+  const Navigate = useNavigate();
+  const {storeTokenInLS}=useAuth()
   const [user, setUser] = useState({
     username: "",
     email: "",
     password: "",
   });
 
-  const Navigate = useNavigate();
 
   const handleInput = (e) => {
     console.log(e);
@@ -25,7 +25,6 @@ export const Register = () => {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // alert(user);
     console.log(user);
 
     // database Connetction
@@ -38,12 +37,18 @@ export const Register = () => {
         body: JSON.stringify(user),
       });
       if (response.ok) {
+        const res_data = await response.json();
+        console.log(res_data);
+        storeTokenInLS(res_data.token) //store  token by creating a function 
+
+        // localStorage.setItem("token", res_data.token); // by general method
+
         setUser({
           username: "",
           email: "",
           password: "",
         });
-        Navigate("/login")
+        Navigate("/login");
       }
       console.log(response);
     } catch (error) {

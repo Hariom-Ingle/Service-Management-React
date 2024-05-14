@@ -1,0 +1,1 @@
+in this we have created a custom hook. In this hook useContext act as a consumer which store all the authContext inside this .

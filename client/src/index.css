@@ -15,7 +15,7 @@ html{
 body{
   --bg-color:#f4f3ff;
   --btn-color:#646cff;
-  --dark-color:#242424;
+  /* --dark-color:#242424; */
   --helper-color:#99b9ff;
   
 background-color: var(--dark-color);

@@ -1,37 +1,70 @@
 import React from "react";
- import { useState } from "react";
- import { Link } from "react-router-dom";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../store/auth";
 
-export const Login= ()=>{
 
 
-    const [user ,setUser]= useState({
-        
-        email :"",
-        password :"" 
+
+export const Login = () => {
+  const navigate=useNavigate()
+  const {storeTokenInLS}=useAuth()
+
+  const [user, setUser] = useState({
+    email: "",
+    password: "",
+  });
+
+  const handleInput = (e) => {
+    console.log(e);
+
+    let name = e.target.name;
+    let value = e.target.value;
+
+    setUser({
+      ...user,
+      [name]: value,
     });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    alert(user);
+    console.log(user);
+
+    try {
+      const response = await fetch(`http://localhost:5000/api/auth/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(user),
+      });
+      if (response.ok) {
+
+        const res_data = await response.json();
+
+        console.log(res_data);
+        storeTokenInLS(res_data.token) //store  token by creating a function 
+
+        // localStorage.setItem("token", res_data.token);
 
 
-    const handleInput=(e)=>{
-        console.log(e)
+        setUser(
+          {email: "",password: "",});
 
-        let name =e.target.name;
-        let value=e.target.value;
+        navigate("/")
 
-        setUser({
-            ...user,
-            [name]:value,
-        })
+      }
+      else{
+        alert("Invalid Credintials")
+      }
+      console.log(response);
+        } catch (error) {
+      console.log("Login",error)
+      
     }
-
-    const handleSubmit =(e)=>{
-        e.preventDefault();
-        alert(user);
-        console.log(user)
-    }
-
-
-
+  };
 
   return (
     <>
@@ -49,7 +82,6 @@ export const Login= ()=>{
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
           <form className="space-y-6" onSubmit={handleSubmit}>
-           
             <div>
               <label
                 htmlFor="email"
@@ -125,4 +157,4 @@ export const Login= ()=>{
       </div>
     </>
   );
-}
+};
