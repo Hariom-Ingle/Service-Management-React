@@ -1,6 +1,6 @@
 const express = require("express");
 const User = require("../models/user-model");
-const router = express.Router();
+// const router = express.Router();
 const bcrypt = require("bcryptjs");
 
 //****   USER REGISTRATION *****/ /
@@ -13,7 +13,7 @@ const register = async (req, res) => {
     const userExist = await User.findOne({ email: email });
 
     if (userExist) {
-      return res.status(400).json({ msg: "email already Exists" });
+      return res.status(400).json({ message: "email already Exists" });
     }
 
     // //*** Bcrypt hash the password   ***/
@@ -35,7 +35,7 @@ const register = async (req, res) => {
     res;
     // .status(500)
     // .json({ error: "Internal server error", message: error.message });
-    next(error);
+    next(err);
   }
 };
 
@@ -73,4 +73,17 @@ const login = async (req, res) => {
   }
 };
 
-module.exports = { register, login };
+//****   USER LOgic to send user login  *****/ /
+const  user =async(req, res)=>{
+  try {
+    const userData =req.user;
+    console.log(userData);
+return res.status(200).json({userData})
+    
+  } catch (error) {
+    console.log(` error from the user route${error}`)
+    
+  }
+}
+
+module.exports = { register, login,user };

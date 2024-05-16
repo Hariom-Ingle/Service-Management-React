@@ -2,13 +2,11 @@ import React from "react";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../store/auth";
-
-
-
+import { toast } from "react-toastify";
 
 export const Login = () => {
-  const navigate=useNavigate()
-  const {storeTokenInLS}=useAuth()
+  const navigate = useNavigate();
+  const { storeTokenInLS } = useAuth();
 
   const [user, setUser] = useState({
     email: "",
@@ -29,7 +27,7 @@ export const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    alert(user);
+    // toast(user);
     console.log(user);
 
     try {
@@ -40,29 +38,23 @@ export const Login = () => {
         },
         body: JSON.stringify(user),
       });
+
+      const res_data = await response.json();
+
+      console.log(res_data);
+
       if (response.ok) {
-
-        const res_data = await response.json();
-
-        console.log(res_data);
-        storeTokenInLS(res_data.token) //store  token by creating a function 
-
+        storeTokenInLS(res_data.token); //store  token by creating a function
         // localStorage.setItem("token", res_data.token);
-
-
-        setUser(
-          {email: "",password: "",});
-
-        navigate("/")
-
-      }
-      else{
-        alert("Invalid Credintials")
+        toast.success("Login Successful")
+        setUser({ email: "", password: "" });
+        navigate("/");
+      } else {
+        toast.error(res_data.extraDetails?res_data.extraDetails:res_data.message)
       }
       console.log(response);
-        } catch (error) {
-      console.log("Login",error)
-      
+    } catch (error) {
+      console.log("Login", error);
     }
   };
 
@@ -145,12 +137,11 @@ export const Login = () => {
           </form>
 
           <p className="mt-10 text-center text-sm text-gray-500">
-            Not a member?
+            
             <Link
               to="#"
               className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
-            >
-              Start a 14 day free trial
+            > 
             </Link>
           </p>
         </div>

@@ -4,8 +4,9 @@ const app = express();
 const cors =require("cors")
 const router = require("./router/auth-router");
 const connectDb = require("./utils/db");
-const errorMiddleware = require("./middleware/error-midddleware");
+// const errorMiddleware = require("./middleware/error-midddleware");
 const contactRoute = require("./router/contact-router");
+const errorMiddleware=require("./middleware/error-midddleware")
 
 
 // cors handle 

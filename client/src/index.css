@@ -1,34 +1,21 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-*{
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-
-
-
-}
-html{
-  font-size: 62.5%;
-}
-body{
-  --bg-color:#f4f3ff;
-  --btn-color:#646cff;
-  /* --dark-color:#242424; */
-  --helper-color:#99b9ff;
-  
-background-color: var(--dark-color);
-}
-
-a{
-  font-weight: 500;
-  font-size: 1.8rem;
-  letter-spacing: 0.1rem;
-  color: var(--btn-color);
-  text-decoration: inherit;
-}
  
-li{
-  list-style: none;
+
+ /* react toast classes  */
+.toastBody {
+    font-family: "Atlas Grotesk Web", Arial, Helvetica, sans-serif;
+    /* color: #10171D; /* #10171D* */
+    font-size:1.2rem !important;
+  }
+  .toastProgress {
+    background: #f79f11 !important;
+  }
+  .Toastify__toast--error {
+    border: 1px solid #000000;
+    border-radius: 50px !important;
+    /* background: #ff0008 !important; */
 }
+
+
