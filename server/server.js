@@ -1,34 +1,39 @@
 require("dotenv").config();
 const express = require("express");
 const app = express();
-const cors =require("cors")
+const cors = require("cors");
 const router = require("./router/auth-router");
 const connectDb = require("./utils/db");
-// const errorMiddleware = require("./middleware/error-midddleware");
 const contactRoute = require("./router/contact-router");
-const errorMiddleware=require("./middleware/error-midddleware")
+const businessRoute = require("./router/business-router");
+const errorMiddleware = require("./middleware/error-midddleware"); // Ensure this line is correct
 
-
-// cors handle 
-const  coreOptions={
-  origin:"http://localhost:5173",
-  methods:"GET,POST,PUSH,DELETE,PATCH,HEAD",
-  Credential:true
-}
+// CORS configuration
+const coreOptions = {
+  origin: "*",
+  methods: "GET,POST,PUT,DELETE,PATCH,HEAD",
+  credentials: true
+};
 app.use(cors(coreOptions));
 
-// to get the json data in express app.
+// Middleware to parse JSON
 app.use(express.json());
 
-// Mount the Router: To use the router in your main Express app, you can "mount" it at a specific URL prefix
+// Mount the routers
 app.use("/api/auth", router);
 app.use("/api/form", contactRoute);
+app.use("/api/business", businessRoute);
 
+// Error handling middleware
 app.use(errorMiddleware);
 
-const PORT = 5000;
-connectDb().then(() => {
-  app.listen(PORT, () => {
-    console.log(`server is running at port: ${PORT}`);
+const PORT = process.env.PORT || 5000;
+connectDb()
+  .then(() => {
+    app.listen(PORT, () => {
+      console.log(`Server is running at port: ${PORT}`);
+    });
+  })
+  .catch((error) => {
+    console.error("Error connecting to database:", error);
   });
-});

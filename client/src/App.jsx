@@ -5,8 +5,13 @@ import {Login} from "./pages/Login";
 import Navbar from "./component/Navbar";
 import {Logout} from "./pages/Logout";
 import Contact from "./pages/Contact";
+import Business from "./pages/Business";
+import Services from "./pages/AllServices";
+import ServiceDetails from "./component/ServiceDetails"
 
 const App = () => {
+
+
   return (
     <>
       <BrowserRouter>
@@ -19,6 +24,10 @@ const App = () => {
           <Route path="/register" element={<Register />} />
           <Route path="/logout" element={<Logout />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/business" element={<Business />} />
+          <Route path="/services" element={<Services />} />
+          <Route path="/Service/:id" element={<ServiceDetails/>} />
+
         </Routes>
       </BrowserRouter>
     </>

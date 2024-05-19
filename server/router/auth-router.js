@@ -10,14 +10,14 @@ const authMiddleware = require("../middleware/auth-middleware");
 // Setting up middleware to parse JSON request bodies
 router.use(express.json());
 
-// Define routes
+// note: Define routes
 
 
 // router.route("/").post(authControllers.home);
 router.route("/register").post(validate(signupSchema),authControllers.register);
 router.route("/login").post(authControllers.login);
-
 router.route("/user").get(authMiddleware,authControllers.user);
+
 
 // router.get("/", (req, res) => {
 //   res.status(200).send("");

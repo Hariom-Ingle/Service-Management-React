@@ -16,7 +16,7 @@ export const Home = () => {
 
   const { user } = useAuth();
 
-  console.log("frontend user ", user);
+  // console.log("frontend user ", user);
 
   const [userData, setUserData] = useState(true);
 
