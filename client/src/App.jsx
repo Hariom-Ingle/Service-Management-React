@@ -8,6 +8,7 @@ import Contact from "./pages/Contact";
 import Business from "./pages/Business";
 import Services from "./pages/AllServices";
 import ServiceDetails from "./component/ServiceDetails"
+import 'bootstrap-icons/font/bootstrap-icons.css';
 
 const App = () => {
 

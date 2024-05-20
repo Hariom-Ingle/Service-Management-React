@@ -28,6 +28,6 @@ bodyClassName="toastBody"
 progressClassName="toastProgress"
 
 />
-  </React.StrictMode>,
+  </React.StrictMode>
   </AuthProvider>
 )

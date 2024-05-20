@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../store/auth";
 
+
 function Navbar() {
   const { isLoggedIn } = useAuth();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -31,7 +32,7 @@ function Navbar() {
 
   return (
     <>
-      <nav className="bg-orange-600">
+      <nav className="bg-orange-600 ">
         <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
           <div className="relative flex h-20 items-center justify-between">
             <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
@@ -144,8 +145,8 @@ function Navbar() {
 
         {/* Side panel */}
         <div
-          className={`fixed inset-y-0 right-0 z-50 mt-50 w-80 bg-gray-800 transition-transform duration-300 ease-in-out transform ${
-            isSidePanelOpen ? "translate-x-0" : "translate-x-full"
+          className={`fixed inset-y-0 right-0 z-50 mt-50 w-80 bg-gray-800 transition-transform duration-300 ease-in-out transform border-gray-900 border-1 rounded-tl-xl rounded-bl-xl ${
+            isSidePanelOpen ? "translate-x-0" : "translate-x-full" 
           }`}
         >
           <div className="flex items-center justify-between px-4 py-6">
