@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const businessSchema = new mongoose.Schema({
   businessName: { type: String, required: true },
-  serviceName: { type: String, required: true },
+  serviceName: { type: [String], required: true },
   stateName: { type: String, required: true },
   cityName: { type: String, required: true },
   address: { type: String, required: true },
@@ -11,7 +11,8 @@ const businessSchema = new mongoose.Schema({
   contact: { type: String, required: true },
   price: { type: String, required: true },
   description: { type: String, required: true },
-  images: { type: [String] } // Store multiple images
+  images: { type: [String] }, // Store multiple images
+  likes: { type: Number, default: 0 }
 }, {
   collection: "services"
 });

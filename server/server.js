@@ -6,8 +6,8 @@ const router = require("./router/auth-router");
 const connectDb = require("./utils/db");
 const contactRoute = require("./router/contact-router");
 const businessRoute = require("./router/business-router");
-const errorMiddleware = require("./middleware/error-midddleware"); // Ensure this line is correct
-
+const errorMiddleware = require("./middleware/error-midddleware"); 
+const likeRouter = require("./router/like-router");
 // CORS configuration
 const coreOptions = {
   origin: "*",
@@ -23,6 +23,7 @@ app.use(express.json());
 app.use("/api/auth", router);
 app.use("/api/form", contactRoute);
 app.use("/api/business", businessRoute);
+app.use("/api/like", likeRouter); 
 
 // Error handling middleware
 app.use(errorMiddleware);

@@ -6,6 +6,7 @@ export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(localStorage.getItem("token"));
   const [user, setUser] = useState(null);
   const [services, setServices] = useState([]);
+  const [likedServices, setLikedServices] = useState([]); // Initialize as empty array
 
   // * saving to the local Storage
   const storeTokenInLS = (serverToken) => {
@@ -14,11 +15,11 @@ export const AuthProvider = ({ children }) => {
   };
 
   // * logout functionality**
-  let isLoggedIn = !!token; // if token present then isLoggedIn is true otherwise false
-  console.log("Is Logged In:", isLoggedIn);
   const LogoutUser = () => {
     setToken("");
     localStorage.removeItem("token");
+    setUser(null);
+    setLikedServices([]); // Clear liked services on logout
   };
 
   // * JWT authentication - to get the currently logged-in Data
@@ -33,8 +34,8 @@ export const AuthProvider = ({ children }) => {
 
       if (response.ok) {
         const data = await response.json();
-        console.log(data);
         setUser(data.userData);
+        setLikedServices(data.userData.likedServices || []); // Ensure likedServices is an array
       } else {
         console.error("Error fetching user data");
       }
@@ -59,7 +60,6 @@ export const AuthProvider = ({ children }) => {
 
       if (response.ok) {
         const data = await response.json();
-        console.log("Fetched services:", data);
         setServices(data);
       } else {
         console.error("Error fetching services");
@@ -69,9 +69,65 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  /////*  liking a service  *////
+  const likeService = async (serviceId) => {
+    try {
+      const response = await fetch("http://localhost:5000/api/like/like", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ serviceId }),
+      });
+  
+      if (response.ok) {
+        const updatedService = services.map((service) =>
+          service._id === serviceId ? { ...service, likes: service.likes + 1 } : service
+        );
+        setServices(updatedService);
+  
+        // Check if the serviceId is already in likedServices
+        if (!likedServices.includes(serviceId)) {
+          // If not, add it to likedServices
+          setLikedServices((prevLikedServices) => [...prevLikedServices, serviceId]);
+          // Display a message for adding to favorites
+          setLikeMessages((prevMessages) => ({
+            ...prevMessages,
+            [serviceId]: "Added to favorites",
+          }));
+        } else {
+          // If serviceId is already in likedServices, remove it
+          const updatedLikedServices = likedServices.filter((id) => id !== serviceId);
+          setLikedServices(updatedLikedServices);
+          // Display a message for removing from favorites
+          setLikeMessages((prevMessages) => ({
+            ...prevMessages,
+            [serviceId]: "Removed from favorites",
+          }));
+        }
+      } else {
+        console.error("Error liking service");
+      }
+    } catch (error) {
+      console.error("Error during liking service:", error);
+    }
+  };
+  
+  
+  
+
   return (
     <AuthContext.Provider
-      value={{ storeTokenInLS, LogoutUser, isLoggedIn, user, services }}
+      value={{
+        storeTokenInLS,
+        LogoutUser,
+        isLoggedIn: !!token,
+        user,
+        services,
+        likedServices,
+        likeService,
+      }}
     >
       {children}
     </AuthContext.Provider>

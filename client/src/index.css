@@ -10,17 +10,24 @@
     font-size:1.2rem !important;
   }
   .toastProgress {
-    background: #f79f11 !important;
+    background: #ffffff !important;
+    /*
+* Created with https://www.css-gradient.com
+* Gradient link: https://www.css-gradient.com/?c1=ef642d&c2=b8b51c&gt=l&gd=dtr
+*/
+background: #EF642D;
+background: linear-gradient(225deg, #ff0000,#f6ff00) !important;
   }
   .Toastify__toast--error {
-    border: 1px solid #000000;
-    border-radius: 50px !important;
+    background-color: red !important;
+    /* border: 1px solid #000000; */
+    /* border-radius: 50px !important; */
     /* background: #ff0008 !important; */
 }
 
 body{
   background-color: rgb(236, 254, 254) !important;
-  background-color: rgba(145, 209, 255, 0.7);
+  /* background-color: rgb(13, 0, 47) !important; */
 }
 
  

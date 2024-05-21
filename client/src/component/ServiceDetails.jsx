@@ -100,23 +100,24 @@ function ServiceDetails() {
     <>
       <div className="container mx-auto md:w-4/5 mt-2 w-11/12   bg-gray-50 shadow-[0_10px_5px_rgba(8,_112,_184,_0.7)]  py-10">
         <div className="grid grid-cols-1 mx-2  md:grid-cols-1 gap-8 ">
-          <div className="grid grid-cols-2 gap-1 md:px-40  rounded-md  ">
+          <div className="grid grid-cols-2 gap-1 md:px-40  ">
+            
             {/* Image container 1 */}
             <div className="relative    ">
               <img
                 src={images[0]}
                 alt="Service"
                 onClick={openGallery}
-                className="cursor-pointer w-full h-full object-cover rounded-md   shadow-[0_0px_3px_rgba(8,_112,_184,_0.7)]  "
+                className="cursor-pointer w-full h-full object-cover"
               />
             </div>
             {/* Image container 2 */}
             <div className="relative  ">
               <img
-                src={images[2]}
+                src={images[1]}
                 alt="Service"
                 onClick={openGallery}
-                className="cursor-pointer w-full h-full object-cover rounded-md  shadow-[0_0px_3px_rgba(8,_112,_184,_0.7)]  "
+                className="cursor-pointer w-full h-full object-cover"
               />
             </div>
             {/* Image container 3 */}
@@ -125,7 +126,7 @@ function ServiceDetails() {
                 src={images[2]}
                 alt="Service"
                 onClick={openGallery}
-                className="cursor-pointer w-full h-full object-cover rounded-md  shadow-[0_0px_3px_rgba(8,_112,_184,_0.7)] "
+                className="cursor-pointer w-full h-full object-cover"
               />
             </div>
             {/* Image container 4 */}
@@ -134,17 +135,17 @@ function ServiceDetails() {
                 src={images[0]}
                 alt="Service"
                 onClick={openGallery}
-                className="cursor-pointer w-full h-full object-cover rounded-md  shadow-[0_0px_3px_rgba(8,_112,_184,_0.7)] "
+                className="cursor-pointer w-full h-full object-cover"
               />
               {/* Overlay for 'More' text */}
               <div
-                className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 text-white text-xl font-bold rounded-md"
+                className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 text-white text-xl font-bold"
                 onClick={openGallery}
               >
                 More
               </div>
               {/* Number of images text */}
-              <div className="absolute bottom-0 right-0 bg-black text-white p-2 rounded-md">
+              <div className="absolute bottom-0 right-0 bg-black text-white p-2">
                 {images.length} images
               </div>
             </div>

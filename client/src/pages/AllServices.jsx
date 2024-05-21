@@ -1,12 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useAuth } from "../store/auth";
 import { Link } from "react-router-dom";
 
-function Services() {
-  const { services } = useAuth();
-
+function AllServices() {
+  const { services, likedServices = [], likeService } = useAuth(); // Default to empty array
   const [callClicked, setCallClicked] = useState(false);
   const [chatClicked, setChatClicked] = useState(false);
+  const [likeMessages, setLikeMessages] = useState({});
+  
 
   const handleCallClick = () => {
     setCallClicked(true);
@@ -22,12 +23,35 @@ function Services() {
     }, 200);
   };
 
+  const handleLikeClick = async (serviceId) => {
+    try {
+      const updatedLikedServices = await likeService(serviceId);
+      setLikedServices(updatedLikedServices); // Update the liked services state
+      const message = likedServices.includes(serviceId) ? "Removed from favorites" : "Added to favorites";
+      setLikeMessages((prevMessages) => ({
+        ...prevMessages,
+        [serviceId]: message,
+      }));
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+  
+
+  useEffect(() => {
+    // Clear the like message after 3 seconds
+    const timeout = setTimeout(() => {
+      setLikeMessages({});
+    }, 3000);
+    return () => clearTimeout(timeout);
+  }, [likeMessages]);
+
   return (
     <div className="">
       {services.map((business) => (
-        <Link key={business._id} className="block mb-4 ">
-          <div className="flex flex-col xl:w-3/4 md:flex-row bg-gray-200 rounded-xl p-4 shadow-[0px_2px_3px_-1px_rgba(0,0,0,0.1),0px_1px_0px_0px_rgba(25,28,33,0.02),0px_0px_0px_1px_rgba(25,28,33,0.08)]">
-            <Link to={`/Service/${business._id}`} className="flex-shrink-0 w-full md:w-80 flex justify-center">
+        <div key={business._id} className="block mb-4 mt-5">
+          <div className="flex flex-col xl:w-3/4 md:flex-row bg-gray-200 rounded-xl p-4 shadow-[0_0px_3px_rgba(8,_112,_184,_0.7)]">
+            <div className="flex-shrink-0 w-full md:w-80 flex justify-center">
               {business.images[0] && (
                 <img
                   src={`./uploads/${business.images[0]}`}
@@ -35,29 +59,32 @@ function Services() {
                   className="rounded-xl w-full h-64 object-cover mb-2"
                 />
               )}
-            </Link>
+            </div>
             <div className="flex flex-col justify-self-stretch ml-0 md:ml-6 mt-4 md:mt-0 relative w-full">
               <div className="flex justify-between items-center mb-3">
                 <h2 className="text-xl pr-5 font-bold">{business.businessName}</h2>
-                <div className="absolute top-0 right-0  md:static md:ml-auto">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    height="18"
-                    width="18"
-                    viewBox="0 0 512 512"
-                  >
-                    <path d="M225.8 468.2l-2.5-2.3L48.1 303.2C17.4 274.7 0 234.7 0 192.8v-3.3c0-70.4 50-130.8 119.2-144C158.6 37.9 198.9 47 231 69.6c9 6.4 17.4 13.8 25 22.3c4.2-4.8 8.7-9.2 13.5-13.3c3.7-3.2 7.5-6.2 11.5-9c0 0 0 0 0 0C313.1 47 353.4 37.9 392.8 45.4C462 58.6 512 119.1 512 189.5v3.3c0 41.9-17.4 81.9-48.1 110.4L288.7 465.9l-2.5 2.3c-8.2 7.6-19 11.9-30.2 11.9s-22-4.2-30.2-11.9zM239.1 145c-.4-.3-.7-.7-1-1.1l-17.8-20c0 0-.1-.1-.1-.1c0 0 0 0 0 0c-23.1-25.9-58-37.7-92-31.2C81.6 101.5 48 142.1 48 189.5v3.3c0 28.5 11.9 55.8 32.8 75.2L256 430.7 431.2 268c20.9-19.4 32.8-46.7 32.8-75.2v-3.3c0-47.3-33.6-88-80.1-96.9c-34-6.5-69 5.4-92 31.2c0 0 0 0-.1 .1s0 0-.1 .1l-17.8 20c-.3 .4-.7 .7-1 1.1c-4.5 4.5-10.6 7-16.9 7s-12.4-2.5-16.9-7z" />
-                  </svg>
-                </div>
+               { likedServices.includes(business._id) ?(
+
+                <button className=" text-red-600 hover:scale-100 transition-all duration-300" onClick={() => handleLikeClick(business._id)}>
+                  <i className="bi bi-heart-fill"></i>
+
+                </button>
+               ):(
+                <button className="" onClick={() => handleLikeClick(business._id)}>
+                <i className="bi bi-heart"></i>
+              </button>
+               )}
+
+               
               </div>
-              <div className="flex gap-1.5 text-yellow-500 mb-4">
-                <i className="bi bi-star-fill"></i>
-                <i className="bi bi-star-fill"></i>
-                <i className="bi bi-star-fill"></i>
-                <i className="bi bi-star-half"></i>
-                <i className="bi bi-star"></i>
+              <div className="flex gap-1.5 mb-4 ">
+                <i className="bi bi-star-fill  text-yellow-500 "></i>
+                <i className="bi bi-star-fill text-yellow-500 "></i>
+                <i className="bi bi-star-fill text-yellow-500 "></i>
+                <i className="bi bi-star-half text-yellow-500 "></i>
+                <i className="bi bi-star text-yellow-500 "></i>
               </div>
-              <div className="mb-3">
+              <div className="flex gap-2 mb-4">
                 <i className="bi bi-geo-alt">{business.address}</i>
               </div>
               <div className="flex gap-2 mb-4">
@@ -90,17 +117,18 @@ function Services() {
                   </button>
                 </a>
                 <Link to={`/Service/${business._id}`}>
-                  <button>
-                    Details
-                  </button>
+                  <button  className="rounded-lg border-2 border-black border-opacity-5  py-1.5 px-2.5  text-black">Details</button>
                 </Link>
               </div>
+              {likeMessages[business._id] && (
+                <p className="text-green-500">{likeMessages[business._id]}</p>
+              )}
             </div>
           </div>
-        </Link>
+        </div>
       ))}
     </div>
   );
 }
 
-export default Services;
+export default AllServices;

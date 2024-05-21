@@ -18,14 +18,17 @@ const businessForm = async (req, res) => {
       email,
       contact,
       price,
-      description
+      description,
     } = req.body;
 
-    const images = req.files.map(file => file.filename);
+    const images = req.files.map((file) => file.filename);
+
+    // Parse serviceName as it is sent as a JSON string
+    const parsedServiceName = JSON.parse(serviceName);
 
     const newBusiness = await Business.create({
       businessName,
-      serviceName,
+      serviceName: parsedServiceName,
       stateName,
       cityName,
       address,
@@ -34,13 +37,13 @@ const businessForm = async (req, res) => {
       contact,
       price,
       description,
-      images
+      images,
     });
 
     res.status(201).json(newBusiness);
   } catch (error) {
-    console.error('Error creating business:', error);
-    res.status(500).json({ error: 'Internal server error' });
+    console.error("Error creating business:", error);
+    res.status(500).json({ error: "Internal server error" });
   }
 };
 
@@ -50,8 +53,8 @@ const getAllBusinesses = async (req, res) => {
     const businesses = await Business.find();
     res.status(200).json(businesses);
   } catch (error) {
-    console.error('Error fetching businesses:', error);
-    res.status(500).json({ error: 'Internal server error' });
+    console.error("Error fetching businesses:", error);
+    res.status(500).json({ error: "Internal server error" });
   }
 };
 

@@ -7,7 +7,9 @@ import {Logout} from "./pages/Logout";
 import Contact from "./pages/Contact";
 import Business from "./pages/Business";
 import Services from "./pages/AllServices";
+import Favorites from "./pages/Favorites";
 import ServiceDetails from "./component/ServiceDetails"
+import Profile from "./pages/Profile";
 import 'bootstrap-icons/font/bootstrap-icons.css';
 
 const App = () => {
@@ -27,6 +29,8 @@ const App = () => {
           <Route path="/contact" element={<Contact />} />
           <Route path="/business" element={<Business />} />
           <Route path="/services" element={<Services />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/favorites" element={<Favorites />} />
           <Route path="/Service/:id" element={<ServiceDetails/>} />
 
         </Routes>

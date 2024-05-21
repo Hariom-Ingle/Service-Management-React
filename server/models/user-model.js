@@ -19,6 +19,11 @@ const userSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  likedServices: {
+    type: [mongoose.Schema.Types.ObjectId],
+    ref: 'Business',
+    default: [],  // Initialize as empty array
+  },
 });
 
 //? Secure the password with bcrypt

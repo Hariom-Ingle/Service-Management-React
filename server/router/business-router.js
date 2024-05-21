@@ -22,6 +22,8 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
+
+
 router.post("/upload", upload.array('images', 10), businessController.businessForm); // Change to handle multiple images
 router.get("/all", businessController.getAllBusinesses);
 
