@@ -1,5 +1,7 @@
 import React from "react";
 import { useAuth } from "../store/auth";
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
 
 function Favorites() {
   const { services, likedServices } = useAuth();
@@ -15,9 +17,9 @@ function Favorites() {
         {likedServicesList.length > 0 ? (
           likedServicesList.map((service) => (
             <div key={service._id} className="border p-4 rounded shadow-md">
-              <h3 className="text-lg font-semibold mb-2">{service.businessName}</h3>
-              <p className="text-gray-600">{service.address}</p>
-              <p className="text-gray-600">{service.contact}</p>
+              <h3 className="text-lg font-semibold mb-2">{service.businessName || <Skeleton />}</h3>
+              <p className="text-gray-600">{service.address || <Skeleton />}</p>
+              <p className="text-gray-600">{service.contact || <Skeleton />}</p>
             </div>
           ))
         ) : (

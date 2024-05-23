@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const businessController = require('../controller/business-controller');
+ 
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
@@ -22,9 +23,9 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-
-
-router.post("/upload", upload.array('images', 10), businessController.businessForm); // Change to handle multiple images
+router.post("/upload", upload.array('images', 10), businessController.businessForm);
 router.get("/all", businessController.getAllBusinesses);
+router.put('/upload/:id', upload.array('images', 10), businessController.updateBusiness);
+router.delete('/delete/:id', businessController.deleteBusiness);
 
 module.exports = router;

@@ -1,4 +1,3 @@
-require("dotenv").config();
 const express = require("express");
 const app = express();
 const cors = require("cors");
@@ -8,6 +7,7 @@ const contactRoute = require("./router/contact-router");
 const businessRoute = require("./router/business-router");
 const errorMiddleware = require("./middleware/error-midddleware"); 
 const likeRouter = require("./router/like-router");
+
 // CORS configuration
 const coreOptions = {
   origin: "*",

@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 
+
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
@@ -7,6 +8,7 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [services, setServices] = useState([]);
   const [likedServices, setLikedServices] = useState([]); // Initialize as empty array
+  const [likeMessages, setLikeMessages] = useState({}); // Initialize as an empty object
 
   // * saving to the local Storage
   const storeTokenInLS = (serverToken) => {
@@ -87,20 +89,15 @@ export const AuthProvider = ({ children }) => {
         );
         setServices(updatedService);
   
-        // Check if the serviceId is already in likedServices
         if (!likedServices.includes(serviceId)) {
-          // If not, add it to likedServices
           setLikedServices((prevLikedServices) => [...prevLikedServices, serviceId]);
-          // Display a message for adding to favorites
           setLikeMessages((prevMessages) => ({
             ...prevMessages,
             [serviceId]: "Added to favorites",
           }));
         } else {
-          // If serviceId is already in likedServices, remove it
           const updatedLikedServices = likedServices.filter((id) => id !== serviceId);
           setLikedServices(updatedLikedServices);
-          // Display a message for removing from favorites
           setLikeMessages((prevMessages) => ({
             ...prevMessages,
             [serviceId]: "Removed from favorites",
@@ -113,6 +110,39 @@ export const AuthProvider = ({ children }) => {
       console.error("Error during liking service:", error);
     }
   };
+  
+
+  //**** Deleting service ****//
+  const deleteService = async (serviceId) => {
+
+   
+    try {
+      const response = await fetch(`http://localhost:5000/api/business/delete/${serviceId}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}` // Add token if required
+        },
+
+      });
+  
+      if (!response.ok) {
+        let errorMessage = 'Failed to delete service';
+        try {
+          const errorData = await response.json();
+          errorMessage = errorData.error || errorMessage;
+        } catch (jsonError) {
+          // Handle case where response is not JSON
+        }
+        throw new Error(errorMessage);
+      }
+  
+      setServices((prevServices) => prevServices.filter(service => service._id !== serviceId));
+    } catch (error) {
+      console.error('Error deleting service:', error);
+    }
+  };
+  
   
   
   
@@ -127,6 +157,8 @@ export const AuthProvider = ({ children }) => {
         services,
         likedServices,
         likeService,
+        deleteService,
+        likeMessages,  
       }}
     >
       {children}

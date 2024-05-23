@@ -5,7 +5,9 @@ import "./index.css";
 import { AuthProvider } from "./store/auth.jsx";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import { SkeletonTheme } from "react-loading-skeleton";
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
 ReactDOM.createRoot(document.getElementById("root")).render(
   <AuthProvider>
     <React.StrictMode>
@@ -26,6 +28,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         progressClassName="toastProgress"
       />
     </React.StrictMode>
+   
     
   </AuthProvider>
 );

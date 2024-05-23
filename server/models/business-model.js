@@ -11,7 +11,7 @@ const businessSchema = new mongoose.Schema({
   contact: { type: String, required: true },
   price: { type: String, required: true },
   description: { type: String, required: true },
-  images: { type: [String] }, // Store multiple images
+  images: { type: [String], default: [] },
   likes: { type: Number, default: 0 }
 }, {
   collection: "services"
