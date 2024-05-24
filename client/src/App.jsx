@@ -6,23 +6,20 @@ import Navbar from "./component/Navbar";
 import { Logout } from "./pages/Logout";
 import Contact from "./pages/Contact";
 import Business from "./pages/Business";
-import Services from "./pages/AllServices";
+import AllServices from "./pages/AllServices";
 import Favorites from "./pages/Favorites";
 import ServiceDetails from "./component/ServiceDetails";
 import Profile from "./pages/Profile";
+import TermsConditiion from "./pages/TermsConditions";
 import 'bootstrap-icons/font/bootstrap-icons.css';
-
+import Footer from "./component/Footer";
 
 const App = () => {
-
-
   return (
     <>
       <BrowserRouter>
-      <Navbar/>
-
+        <Navbar />
         <Routes>
-
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
@@ -30,13 +27,15 @@ const App = () => {
           <Route path="/contact" element={<Contact />} />
           <Route path="/business" element={<Business />} />
           <Route path="/business/:id" element={<Business />} />
-
-          <Route path="/services" element={<Services />} />
+          <Route path="/services" element={<AllServices />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/favorites" element={<Favorites />} />
-          <Route path="/Service/:id" element={<ServiceDetails/>} />
-
+          <Route path="/termscondition" element={<TermsConditiion />} />
+          <Route path="/Service/:id" element={<ServiceDetails />} />
+          <Route path="/favorites/:id" element={<ServiceDetails />} />
+          
         </Routes>
+    
       </BrowserRouter>
     </>
   );

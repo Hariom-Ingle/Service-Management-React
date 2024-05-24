@@ -4,20 +4,20 @@ import JoditEditor from "jodit-react";
 import { useAuth } from "../store/auth";
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
-import { useParams, useLocation } from "react-router-dom";
+import { useParams, useLocation, useNavigate } from "react-router-dom";
 
 const servicesData = [
-  "Lawn Care",
   "Catering",
   "DJ Services",
   "Cleaning",
   "Lawn",
   "Hotel",
   "Decoration",
+  "Photography",
 ];
 
 function Business() {
-  const { handleSubmit, register, errors } = useForm();
+  const { handleSubmit, register, reset, formState: { errors } } = useForm();
   const [images, setImages] = useState([]);
   const [imageUrls, setImageUrls] = useState([]);
   const editor = useRef(null);
@@ -25,6 +25,7 @@ function Business() {
   const { user } = useAuth();
   const { id } = useParams();
   const location = useLocation();
+  const navigate = useNavigate();
   const serviceToEdit = location.state?.service;
 
   const [details, setDetails] = useState({
@@ -125,7 +126,7 @@ function Business() {
     setImageUrls((prevUrls) => prevUrls.filter((_, i) => i !== index));
   };
 
-  const onSubmit = async () => {
+  const onSubmit = async (data) => {
     const formData = new FormData();
     
     Object.keys(details).forEach((key) => {
@@ -155,13 +156,15 @@ function Business() {
       });
       const responseData = await response.json();
       toast.success("Data uploaded successfully!");
+      reset();
+      navigate("/services");
     } catch (error) {
       toast.error("Error uploading data.");
     }
   };
 
   return (
-    <section className="pt-5 bg-gray-40">
+    <section className="pt-5 bg-gray-40 ">
       <ToastContainer />
       <div className="container mx-auto">
         <div className="flex flex-wrap justify-center mt-5">
@@ -171,7 +174,7 @@ function Business() {
               onSubmit={handleSubmit(onSubmit)}
               encType="multipart/form-data"
             >
-              <h5 className="text-xl font-semibold mb-4">Business Information</h5>
+              <h5 className="text-xl font-semibold mt-24 mb-4 text-black">Business Information</h5>
 
               <div className="flex flex-wrap px-5 py-2 md:space-x-4">
                 <div className="w-full md:w-[calc(50%-1rem)] px-2 mt-5 mb-4 border-solid bg-blue-50 rounded-xl">
@@ -337,7 +340,7 @@ function Business() {
                 </div>
               </div>
 
-              <div className="flex flex-wrap px-5 py-2 md:space-x-4">
+              {/* <div className="flex flex-wrap px-5 py-2 md:space-x-4">
                 <div className="w-full md:w-[calc(50%-1rem)] px-2 mt-5 mb-4 border-solid bg-blue-50 rounded-xl">
                   <label className="block font-bold mb-2 mt-4" htmlFor="price">
                     Price
@@ -353,7 +356,7 @@ function Business() {
                     required
                   />
                 </div>
-              </div>
+              </div> */}
 
               <div className="flex flex-wrap px-5 py-2 md:space-x-4">
                 <div className="w-full px-2 mt-5 mb-4 border-solid bg-blue-50 rounded-xl">

@@ -54,7 +54,7 @@ function ServiceDetails() {
   const handleEditClick = () => {
     navigate(`/business/${service._id}`, { state: { service } });
   };
-  const myid="664e3f8cac856d8364458a6e"
+  const myid = "664e3f8cac856d8364458a6e";
   const handleDeleteClick = async () => {
     try {
       await deleteService(service._id); // Pass service._id to deleteService
@@ -63,11 +63,13 @@ function ServiceDetails() {
       console.error("Error deleting service:", error);
     }
   };
-  
-  
 
   if (!service) {
-    return <div>Loading...</div>;
+    return  <div className="flex items-center justify-center h-screen">
+    <div>
+      <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-black"></div>
+    </div>
+  </div>;
   }
 
   const images = service.images
@@ -85,7 +87,7 @@ function ServiceDetails() {
 
   return (
     <>
-      <div className="container mx-auto md:w-4/5 mt-2 w-11/12 bg-gray-50 shadow-[0_10px_5px_rgba(8,_112,_184,_0.7)] py-10">
+      <div className="container mx-auto md:w-4/5 mt-24 w-11/12 rounded-md bg-gray-50 shadow-[0_10px_5px_rgba(8,_112,_184,_0.7)] py-10">
         <div className="grid grid-cols-1 mx-2 md:grid-cols-1 gap-8">
           <div className="grid grid-cols-2  gap-1 md:px-40">
             {images.slice(0, 4).map((image, index) => (
@@ -128,14 +130,24 @@ function ServiceDetails() {
                 </p>
               </div>
               <div className="flex gap-2 mb-4">
-                {JSON.parse(service.serviceName).map((name, index) => (
-                  <button
-                    key={index}
-                    className="border border-sky-500 bg-gray-300 py-1 px-2 text-xs rounded-md"
-                  >
-                    {name}
-                  </button>
-                ))}
+                {service.serviceName ? (
+                  Array.isArray(service.serviceName) ? (
+                    service.serviceName.map((name, index) => (
+                      <button
+                        key={index}
+                        className="border border-sky-500 bg-gray-300 py-1 px-2 text-xs rounded-md"
+                      >
+                        {name}
+                      </button>
+                    ))
+                  ) : (
+                    <button className="border border-sky-500 bg-gray-300 py-1 px-2 text-xs rounded-md">
+                      {business.serviceName}
+                    </button>
+                  )
+                ) : (
+                  <Skeleton width={100} />
+                )}
               </div>
               <div className="flex mb-2 gap-5">
                 <button className="py-1.5 px-2.5 rounded-lg bg-green-700">
@@ -177,7 +189,7 @@ function ServiceDetails() {
 
           <div className="my-8 mx-2 md:mx-20 shadow-[0_0px_3px_rgba(8,_112,_184,_0.7)] border-primary rounded-xl p-5">
             <h2 className="text-xl font-bold mb-4">Description</h2>
-            <div dangerouslySetInnerHTML={{ __html: service.description }} />
+            <div className=" overflow-scroll" dangerouslySetInnerHTML={{ __html: service.description }} />
           </div>
         </div>
       </div>

@@ -6,10 +6,10 @@ const businessSchema = new mongoose.Schema({
   stateName: { type: String, required: true },
   cityName: { type: String, required: true },
   address: { type: String, required: true },
-  businessLocation: { type: String, required: true },
+  businessLocation: { type: String, required: false },
   email: { type: String, required: true },
   contact: { type: String, required: true },
-  price: { type: String, required: true },
+  price: { type: String, required: false },
   description: { type: String, required: true },
   images: { type: [String], default: [] },
   likes: { type: Number, default: 0 }

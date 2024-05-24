@@ -7,7 +7,7 @@ function Profile() {
   console.log("profile user.",user);
 
   return (
-    <div className="grid md:grid-cols-3">
+    <div className="grid md:grid-cols-3 mt-24">
       <div className="w-4/5 m-5 bg-gray-50 shadow-[0_10px_5px_rgba(8,_112,_184,_0.7)] rounded-md " >
         
           <div>

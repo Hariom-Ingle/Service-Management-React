@@ -46,11 +46,13 @@ export const Login = () => {
       if (response.ok) {
         storeTokenInLS(res_data.token); //store  token by creating a function
         // localStorage.setItem("token", res_data.token);
-        toast.success("Login Successful")
+        toast.success("Login Successful");
         setUser({ email: "", password: "" });
         navigate("/");
       } else {
-        toast.error(res_data.extraDetails?res_data.extraDetails:res_data.message)
+        toast.error(
+          res_data.extraDetails ? res_data.extraDetails : res_data.message
+        );
       }
       console.log(response);
     } catch (error) {
@@ -60,13 +62,20 @@ export const Login = () => {
 
   return (
     <>
-      <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
-        <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-          <img
-            className="mx-auto h-10 w-auto"
-            src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-            alt="Your Company"
-          />
+      <div className="flex min-h-full flex-col justify-center px-6 py-12 mt-24 lg:px-8" style={{ height: "90vh" }}>
+        <div className=" sm:mx-auto sm:w-full sm:max-w-sm">
+          <div className=" flex  text-center flex-col">
+            <img
+              className="mx-auto h-14 w-auto"
+              src="/images/favicon.ico"
+              alt="Event Horizon"
+            />
+            <h1 className="logo" style={{ fontSize: "1.4rem", color: "black" }}>
+              {" "}
+              Event Horizon
+            </h1>
+          </div>
+
           <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
             Login to your account
           </h2>
@@ -86,11 +95,12 @@ export const Login = () => {
                   id="email"
                   name="email"
                   type="email"
+                  placeholder="Email"
                   autoComplete="email"
                   required
                   onChange={handleInput}
                   value={user.email}
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
             </div>
@@ -107,9 +117,7 @@ export const Login = () => {
                   <Link
                     to="#"
                     className="font-semibold text-indigo-600 hover:text-indigo-500"
-                  >
-                    Forgot password?
-                  </Link>
+                  ></Link>
                 </div>
               </div>
               <div className="mt-2">
@@ -117,11 +125,12 @@ export const Login = () => {
                   id="password"
                   name="password"
                   type="password"
+                  placeholder="Password"
                   autoComplete="current-password"
                   required
                   onChange={handleInput}
                   value={user.password}
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
             </div>
@@ -137,12 +146,10 @@ export const Login = () => {
           </form>
 
           <p className="mt-10 text-center text-sm text-gray-500">
-            
             <Link
               to="#"
               className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
-            > 
-            </Link>
+            ></Link>
           </p>
         </div>
       </div>

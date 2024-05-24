@@ -29,6 +29,7 @@
     "react-hook-form": "^7.51.4",
     "react-loading-skeleton": "^3.4.0",
     "react-router-dom": "^6.23.1",
+    "react-scroll": "^1.9.0",
     "react-toastify": "^10.0.5"
   },
   "devDependencies": {
