@@ -62,7 +62,9 @@ export const Login = () => {
 
   return (
     <>
-      <div className="flex min-h-full flex-col justify-center px-6 py-12 mt-24 lg:px-8" style={{ height: "90vh" }}>
+      <div className="flex min-h-full  flex-col justify-center px-6 py-12 mt-24 lg:px-8" style={{ height: "90vh" }}>
+
+        
         <div className=" sm:mx-auto sm:w-full sm:max-w-sm">
           <div className=" flex  text-center flex-col">
             <img

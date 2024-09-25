@@ -13,7 +13,7 @@ import Profile from "./pages/Profile";
 import TermsConditiion from "./pages/TermsConditions";
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import Footer from "./component/Footer";
-
+import { Error } from "./pages/Error";
 const App = () => {
   return (
     <>
@@ -30,9 +30,11 @@ const App = () => {
           <Route path="/services" element={<AllServices />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/favorites" element={<Favorites />} />
+          <Route path="*" element={<Error />} />
           <Route path="/termscondition" element={<TermsConditiion />} />
           <Route path="/Service/:id" element={<ServiceDetails />} />
-          <Route path="/favorites/:id" element={<ServiceDetails />} />
+          <Route path="/favorites/:id" component={ServiceDetails} />
+
           
         </Routes>
     

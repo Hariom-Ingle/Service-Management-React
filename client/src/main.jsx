@@ -26,6 +26,12 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         transition:Bounce
         bodyClassName="toastBody"
         progressClassName="toastProgress"
+        className="toast-container"
+        
+        toastClassName={{
+          success: 'toast-success', // Custom CSS class for success toast
+          error: 'toast-error' // Custom CSS class for error toast
+        }}
       />
     </React.StrictMode>
    

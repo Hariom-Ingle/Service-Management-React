@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const businessController = require('../controller/business-controller');
+const authenticateToken = require("../middleware/authenticateToken");
  
 const multer = require('multer');
 const path = require('path');
@@ -27,5 +28,6 @@ router.post("/upload", upload.array('images', 10), businessController.businessFo
 router.get("/all", businessController.getAllBusinesses);
 router.put('/upload/:id', upload.array('images', 10), businessController.updateBusiness);
 router.delete('/delete/:id', businessController.deleteBusiness);
+router.post("/:id/review", authenticateToken, businessController.addReview);
 
 module.exports = router;

@@ -1,71 +1,228 @@
+@import url("https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=Kalnia:wght@100;200;300;400;500;600;700&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Philosopher:ital,wght@0,400;0,700;1,400;1,700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Zilla+Slab:wght@300&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=Kalnia:wght@100;200;300;400;500;600;700&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Philosopher:ital,wght@0,400;0,700;1,400;1,700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Zilla+Slab:wght@300&display=swap');
- 
-
- /* react toast classes  */
+/* react toast classes  */
 .toastBody {
-    font-family: "Atlas Grotesk Web", Arial, Helvetica, sans-serif;
-    /* color: #10171D; /* #10171D* */
-    font-size:1.2rem !important;
-  }
-  .toastProgress {
-    background: #ffffff !important;
-    /*
+  font-family: "Atlas Grotesk Web", Arial, Helvetica, sans-serif;
+  /* color: #10171D; /* #10171D* */
+  font-size: 1.2rem !important;
+}
+.toastProgress {
+  background: #ffffff !important;
+  /*
 * Created with https://www.css-gradient.com
 * Gradient link: https://www.css-gradient.com/?c1=ef642d&c2=b8b51c&gt=l&gd=dtr
 */
-background: #EF642D;
-background: linear-gradient(225deg, #ff0000,#f6ff00) !important;
-  }
-  .Toastify__toast--error {
-    background-color: red !important;
-    /* border: 1px solid #000000; */
-    /* border-radius: 50px !important; */
-    /* background: #ff0008 !important; */
+  background: #ef642d;
+  background: linear-gradient(225deg, #ff0000, #f6ff00) !important;
+}
+.Toastify__toast--error {
+  background-color: red !important;
+  /* border: 1px solid #000000; */
+  /* border-radius: 50px !important; */
+  /* background: #ff0008 !important; */
 }
 
-body{
+body {
   /* background-color: rgb(236, 254, 254) !important; */
-  background-image: linear-gradient(to top, #9e7bd1, #9883db, #918ae4, #8992ec, #8099f4, #7193f8, #5e8dfb, #4688ff, #1872ff, #005aff, #003dff, #0600ff) !important;
-  
+  background-image: linear-gradient(
+    to top,
+    #9e7bd1,
+    #9883db,
+    #918ae4,
+    #8992ec,
+    #8099f4,
+    #7193f8,
+    #5e8dfb,
+    #4688ff,
+    #1872ff,
+    #005aff,
+    #003cffd3,
+    #0400ffbf
+  ) !important;
+  /* background-image: linear-gradient(
+    to top,
+    #9e7bd1,
+    #9883db,
+    #918ae4,
+    #8992ec,
+    #8099f4,
+    #7193f8,
+    #5e8dfb,
+    #4688ff,
+    #1872ff,
+    #005aff,
+    #003dff,
+    #3733fed1
+  ) !important; */
+
   /* background-color: rgb(13, 0, 47) !important; */
 }
 
-.logo{
-      font-family: "Philosopher", sans-serif !important;
-      font-size: 1.5rem;
-      font-weight:  700;
-      line-height: 45px;
-      color: #ffffff;
-    
-     
- 
-      text-shadow:0.5px 1px #000000;
-    
-     
+.logo {
+  font-family: "Philosopher", sans-serif !important;
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 45px;
+  color: #ffffff;
+
+  text-shadow: 0.5px 1px #000000;
 }
- 
+
 html {
   scroll-behavior: smooth;
 }
 
-.chetan{
+.chetan {
   /* background-color: #0600FF !important; */
-  background: rgba( 255, 255, 255, 0 );
-box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
-backdrop-filter: blur( 20px );
--webkit-backdrop-filter: blur( 20px );
-border-radius: 10px;
-border: 1px solid rgba( 255, 255, 255, 0.18 );
+  background: rgba(255, 255, 255, 0);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
 }
-.sidepanel{
+.sidepanel {
   background: rgba(20, 20, 20, 0.523);
-box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
-backdrop-filter: blur( 7px );
--webkit-backdrop-filter: blur( 7px );
-border-radius: 10px;
-border: 1px solid rgba( 255, 255, 255, 0.18 );
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(7px);
+  -webkit-backdrop-filter: blur(7px);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+li,p{
+  font-family: "Philosopher", sans-serif;
+}
+
+
+/* //  ERROR PAGE CSS      //  */
+@keyframes animate-gradient {
+  0% {
+    background-position: 0 0;
+  }
+  25% {
+    background-position: 100% 0;
+  }
+  50% {
+    background-position: 100% 100%;
+  }
+  75% {
+    background-position: 0% 100%;
+  }
+  100% {
+    background-position: 0% 0%;
+  }
+}
+
+.popup-container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+/* CSS for success toast */
+.toast-success {
+  background-color: darkgreen;
+  color: white;
+}
+
+/* CSS for error toast */
+.toast-error {
+  background-color: darkred;
+  color: white;
+}
+
+
+/* //  LOADING CSS //*/
+.loader-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.terminal-loader {
+  /* border: 0.1em solid #333; */
+  /* background-color: #1a1a1a; */
+  color: rgb(255, 216, 88);
+  font-family: "Philosopher", sans-serif !important;
+
+  /* font-family: "Courier New", Courier, monospace; */
+  font-size: 2em;
+  padding: 1.5em 1em;
+  width: 12em;
+  text-shadow: 0.5px 1px #000000;
+  /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); */
+  border-radius: 4px;
+  position: relative;
+  overflow: hidden;
+  box-sizing: border-box;
+  text-align: center; /* Center the text horizontally */
+}
+
+.text {
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  /* border-right: 0.2em solid green;  */
+  animation: typeAndDelete 4s steps(11) infinite,
+    blinkCursor 0.5s step-end infinite alternate;
+  margin-top: 1.5em;
+}
+
+@keyframes blinkCursor {
+  50% {
+    border-right-color: transparent;
+  }
+}
+
+@keyframes typeAndDelete {
+  0%,
+  10% {
+    width: 0;
+  }
+  45%,
+  55% {
+    width: 6.2em;
+  } /* adjust width based on content */
+  90%,
+  100% {
+    width: 0;
+  }
+}
+
+
+
+/*//  button Aniation   //*/
+ 
+.btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sub-icon {
+  position: absolute;
+  right: -30px;
+  opacity: 0;
+  transition: opacity 0.5s, transform 0.5s;
+}
+
+.btn.animate .sub-icon {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.btn.animate span {
+  transition: opacity 0.5s;
+  opacity: 0;
+}
+
+
+.text-gold-500 {
+  color: #ffb300; /* Or any other gold color code */
 }

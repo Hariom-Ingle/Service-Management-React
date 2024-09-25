@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
+ 
 
 
 export const AuthContext = createContext();
@@ -82,21 +83,28 @@ export const AuthProvider = ({ children }) => {
         },
         body: JSON.stringify({ serviceId }),
       });
-  
+
       if (response.ok) {
         const updatedService = services.map((service) =>
-          service._id === serviceId ? { ...service, likes: service.likes + 1 } : service
+          service._id === serviceId
+            ? { ...service, likes: service.likes + 1 }
+            : service
         );
         setServices(updatedService);
-  
+
         if (!likedServices.includes(serviceId)) {
-          setLikedServices((prevLikedServices) => [...prevLikedServices, serviceId]);
+          setLikedServices((prevLikedServices) => [
+            ...prevLikedServices,
+            serviceId,
+          ]);
           setLikeMessages((prevMessages) => ({
             ...prevMessages,
             [serviceId]: "Added to favorites",
           }));
         } else {
-          const updatedLikedServices = likedServices.filter((id) => id !== serviceId);
+          const updatedLikedServices = likedServices.filter(
+            (id) => id !== serviceId
+          );
           setLikedServices(updatedLikedServices);
           setLikeMessages((prevMessages) => ({
             ...prevMessages,
@@ -110,24 +118,23 @@ export const AuthProvider = ({ children }) => {
       console.error("Error during liking service:", error);
     }
   };
-  
 
   //**** Deleting service ****//
   const deleteService = async (serviceId) => {
-
-   
     try {
-      const response = await fetch(`http://localhost:5000/api/business/delete/${serviceId}`, {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}` // Add token if required
-        },
+      const response = await fetch(
+        `http://localhost:5000/api/business/delete/${serviceId}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`, // Add token if required
+          },
+        }
+      );
 
-      });
-  
       if (!response.ok) {
-        let errorMessage = 'Failed to delete service';
+        let errorMessage = "Failed to delete service";
         try {
           const errorData = await response.json();
           errorMessage = errorData.error || errorMessage;
@@ -136,16 +143,44 @@ export const AuthProvider = ({ children }) => {
         }
         throw new Error(errorMessage);
       }
-  
-      setServices((prevServices) => prevServices.filter(service => service._id !== serviceId));
+
+      setServices((prevServices) =>
+        prevServices.filter((service) => service._id !== serviceId)
+      );
     } catch (error) {
-      console.error('Error deleting service:', error);
+      console.error("Error deleting service:", error);
     }
   };
-  
-  
-  
-  
+
+// review   system
+const addReview = async (id, review) => {
+  try {
+    const token = localStorage.getItem("token"); // Assuming token is stored in local storage
+    await fetch(`http://localhost:5000/api/business/${id}/review`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify(review)
+    });
+  } catch (error) {
+    console.error("Error adding review:", error);
+    throw error;
+  }
+};
+
+const fetchServiceReviews = async (id) => {
+  try {
+    const response = await fetch(`http://localhost:5000/api/business/all`);
+    const data = await response.json();
+    const service = data.find((s) => s._id === id);
+    return service.reviews;
+  } catch (error) {
+    console.error("Error fetching service reviews:", error);
+    return [];
+  }
+};
 
   return (
     <AuthContext.Provider
@@ -158,7 +193,9 @@ export const AuthProvider = ({ children }) => {
         likedServices,
         likeService,
         deleteService,
-        likeMessages,  
+        likeMessages,
+        addReview, fetchServiceReviews,
+         
       }}
     >
       {children}

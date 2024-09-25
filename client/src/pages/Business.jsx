@@ -4,7 +4,7 @@ import JoditEditor from "jodit-react";
 import { useAuth } from "../store/auth";
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
-import { useParams, useLocation, useNavigate } from "react-router-dom";
+import { useParams, useLocation, useNavigate, Link } from "react-router-dom";
 
 const servicesData = [
   "Catering",
@@ -43,6 +43,10 @@ function Business() {
   const [serviceInput, setServiceInput] = useState("");
   const [filteredServices, setFilteredServices] = useState(servicesData);
 
+  const [termsChecked, setTermsChecked] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showIcon, setShowIcon] = useState(false);
+
   const handleImageUpdate = (e) => {
     const files = Array.from(e.target.files);
     const urls = files.map((file) => URL.createObjectURL(file));
@@ -72,7 +76,7 @@ function Business() {
       });
       setContent(serviceToEdit.description);
       setImages(serviceToEdit.images || []);
-      
+
       const imageUrls = serviceToEdit.images ? serviceToEdit.images.map(image => `/uploads/${image}`) : [];
       setImageUrls(imageUrls);
     }
@@ -126,9 +130,32 @@ function Business() {
     setImageUrls((prevUrls) => prevUrls.filter((_, i) => i !== index));
   };
 
+  const getCurrentLocation = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          const locationString = `${latitude},${longitude}`;
+          setDetails((prevDetails) => ({
+            ...prevDetails,
+            businessLocation: locationString,
+          }));
+        },
+        (error) => {
+          toast.error("Error getting location.");
+          console.error("Error getting location:", error);
+        }
+      );
+    } else {
+      toast.error("Geolocation is not supported by this browser.");
+    }
+  };
+
   const onSubmit = async (data) => {
+    setIsSubmitting(true);
+
     const formData = new FormData();
-    
+
     Object.keys(details).forEach((key) => {
       if (key === "serviceName") {
         formData.append(key, JSON.stringify(details[key]));
@@ -155,16 +182,24 @@ function Business() {
         body: formData,
       });
       const responseData = await response.json();
+      console.log("Response data:", responseData);
       toast.success("Data uploaded successfully!");
-      reset();
-      navigate("/services");
+      setShowIcon(true);
+      setTimeout(() => {
+        setShowIcon(false);
+        reset();
+        navigate("/services");
+      }, 2000);
     } catch (error) {
       toast.error("Error uploading data.");
+      console.error("Error uploading data:", error);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
   return (
-    <section className="pt-5 bg-gray-40 ">
+    <section className="pt-5 bg-gray-40 mb-5">
       <ToastContainer />
       <div className="container mx-auto">
         <div className="flex flex-wrap justify-center mt-5">
@@ -219,15 +254,15 @@ function Business() {
                     </ul>
                   )}
                   <div className="mt-2">
-                    {details.serviceName.map((service, index) => (
+                    {details.serviceName.map((service) => (
                       <span
-                        key={index}
-                        className="inline-flex items-center bg-blue-200 px-2 py-1 rounded-full text-sm mr-2 mt-1"
+                        key={service}
+                        className="inline-block bg-blue-300 text-black py-1 px-2 rounded-full text-sm mr-2 mb-2"
                       >
                         {service}
                         <button
                           type="button"
-                          className="ml-2 text-red-500"
+                          className="ml-2 text-sm"
                           onClick={() => removeService(service)}
                         >
                           &times;
@@ -239,21 +274,6 @@ function Business() {
               </div>
 
               <div className="flex flex-wrap px-5 py-2 md:space-x-4">
-                <div className="w-full md:w-[calc(50%-1rem)] px-2 mt-5 mb-4 border-solid bg-blue-50 rounded-xl">
-                  <label className="block font-bold mb-2 mt-4" htmlFor="cityName">
-                    City
-                  </label>
-                  <input
-                    type="text"
-                    className="form-control w-full border p-2 rounded mt-1 mb-5"
-                    id="cityName"
-                    name="cityName"
-                    value={details.cityName}
-                    onChange={onInputChange}
-                    placeholder="Enter city name"
-                    required
-                  />
-                </div>
 
                 <div className="w-full md:w-[calc(50%-1rem)] px-2 mt-5 mb-4 border-solid bg-blue-50 rounded-xl">
                   <label className="block font-bold mb-2 mt-4" htmlFor="stateName">
@@ -266,10 +286,26 @@ function Business() {
                     name="stateName"
                     value={details.stateName}
                     onChange={onInputChange}
-                    placeholder="Enter state name"
+                    placeholder="Enter state"
                     required
                   />
                 </div>
+                <div className="w-full md:w-[calc(50%-1rem)] px-2 mt-5 mb-4 border-solid bg-blue-50 rounded-xl">
+                  <label className="block font-bold mb-2 mt-4" htmlFor="cityName">
+                    City
+                  </label>
+                  <input
+                    type="text"
+                    className="form-control w-full border p-2 rounded mt-1 mb-5"
+                    id="cityName"
+                    name="cityName"
+                    value={details.cityName}
+                    onChange={onInputChange}
+                    placeholder="Enter city"
+                    required
+                  />
+                </div>
+
               </div>
 
               <div className="flex flex-wrap px-5 py-2 md:space-x-4">
@@ -293,23 +329,32 @@ function Business() {
                   <label className="block font-bold mb-2 mt-4" htmlFor="businessLocation">
                     Business Location
                   </label>
-                  <input
-                    type="text"
-                    className="form-control w-full border p-2 rounded mt-1 mb-5"
-                    id="businessLocation"
-                    name="businessLocation"
-                    value={details.businessLocation}
-                    onChange={onInputChange}
-                    placeholder="Enter business location"
-                    required
-                  />
+                  <div className="flex">
+                    <input
+                      type="text"
+                      className="form-control w-full border p-2 rounded mt-1 mb-5"
+                      id="businessLocation"
+                      name="businessLocation"
+                      value={details.businessLocation}
+                      onChange={onInputChange}
+                      placeholder="Enter business location Latitude, Longitude"
+                      required
+                    />
+                    <button
+                      type="button"
+                      className="bg-blue-500 text-white p-2 rounded ml-2 mt-1 mb-5"
+                      onClick={getCurrentLocation}
+                    >
+                      Use current location
+                    </button>
+                  </div>
                 </div>
               </div>
 
               <div className="flex flex-wrap px-5 py-2 md:space-x-4">
                 <div className="w-full md:w-[calc(50%-1rem)] px-2 mt-5 mb-4 border-solid bg-blue-50 rounded-xl">
                   <label className="block font-bold mb-2 mt-4" htmlFor="contact">
-                    Contact
+                    Contact Number
                   </label>
                   <input
                     type="text"
@@ -318,7 +363,7 @@ function Business() {
                     name="contact"
                     value={details.contact}
                     onChange={onInputChange}
-                    placeholder="Enter contact"
+                    placeholder="Enter contact number"
                     required
                   />
                 </div>
@@ -336,27 +381,41 @@ function Business() {
                     onChange={onInputChange}
                     placeholder="Enter email"
                     required
+                    readOnly
                   />
                 </div>
               </div>
 
-              {/* <div className="flex flex-wrap px-5 py-2 md:space-x-4">
+              <div className="flex flex-wrap px-5 py-2 md:space-x-4 hidden ">
                 <div className="w-full md:w-[calc(50%-1rem)] px-2 mt-5 mb-4 border-solid bg-blue-50 rounded-xl">
                   <label className="block font-bold mb-2 mt-4" htmlFor="price">
-                    Price
+                    Price Range
                   </label>
                   <input
-                    type="number"
+                    type="text"
                     className="form-control w-full border p-2 rounded mt-1 mb-5"
                     id="price"
                     name="price"
                     value={details.price}
                     onChange={onInputChange}
-                    placeholder="Enter price"
-                    required
+                    placeholder="Enter price range"
+                  
                   />
                 </div>
-              </div> */}
+              </div>
+
+              <div className="flex flex-wrap px-5 py-2 md:space-x-4">
+                <div className="w-full px-2 mt-5 mb-4 border-solid bg-blue-50 rounded-xl">
+                  <label className="block font-bold mb-2 mt-4" htmlFor="description">
+                    Description
+                  </label>
+                  <JoditEditor
+                    ref={editor}
+                    value={content}
+                    onChange={(newContent) => setContent(newContent)}
+                  />
+                </div>
+              </div>
 
               <div className="flex flex-wrap px-5 py-2 md:space-x-4">
                 <div className="w-full px-2 mt-5 mb-4 border-solid bg-blue-50 rounded-xl">
@@ -368,21 +427,20 @@ function Business() {
                     className="form-control w-full border p-2 rounded mt-1 mb-5"
                     id="images"
                     name="images"
-                    onChange={handleImageUpdate}
                     multiple
-                    accept="image/*"
+                    onChange={handleImageUpdate}
                   />
-                  <div className="flex flex-wrap">
+                  <div className="flex flex-wrap mt-2">
                     {imageUrls.map((url, index) => (
-                      <div key={index} className="relative w-24 h-24 mr-2 mb-2">
+                      <div key={index} className="relative w-32 h-32 m-2">
                         <img
                           src={url}
-                          alt={`Preview ${index}`}
-                          className="object-cover w-full h-full rounded"
+                          alt={`Selected image ${index + 1}`}
+                          className="w-full h-full object-cover rounded"
                         />
                         <button
                           type="button"
-                          className="absolute top-0 right-0 p-1 text-red-600 bg-white rounded-full"
+                          className="absolute top-0 right-0 bg-red-500 text-white rounded-full p-1"
                           onClick={() => removeImage(index)}
                         >
                           &times;
@@ -393,25 +451,43 @@ function Business() {
                 </div>
               </div>
 
-              <div className="px-5 py-2">
-                <label className="block font-bold mb-2 mt-4" htmlFor="description">
-                  Description
-                </label>
-                <JoditEditor
-                  ref={editor}
-                  value={content}
-                  tabIndex={1}
-                  onBlur={(newContent) => setContent(newContent)}
-                  onChange={(newContent) => {}}
+              <div className="flex items-center mb-4">
+                <input
+                  type="checkbox"
+                  className="form-checkbox"
+                  id="terms"
+                  checked={termsChecked}
+                  onChange={() => setTermsChecked(!termsChecked)}
                 />
+                <label htmlFor="terms" className="ml-2">
+                  I agree to the{" "}
+                  <Link to="/terms" target="_blank" className="text-blue-500 underline">
+                    terms and conditions
+                  </Link>
+                </label>
               </div>
 
-              <div className="flex justify-center mt-5">
+              <div className="flex justify-center">
                 <button
                   type="submit"
-                  className="px-8 py-3 text-white bg-blue-500 rounded-lg shadow hover:bg-blue-700"
+                  className={`btn px-4 py-2 rounded-md text-white font-semibold ${isSubmitting ? "bg-gray-500 cursor-not-allowed" : "bg-blue-500 hover:bg-blue-600"} transition duration-300`}
+                  disabled={isSubmitting}
                 >
-                  Submit
+                  <span>Submit</span>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    className={`sub-icon w-6 h-6 ml-2 ${showIcon ? "block" : "hidden"}`}
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M5 13l4 4L19 7"
+                    />
+                  </svg>
                 </button>
               </div>
             </form>

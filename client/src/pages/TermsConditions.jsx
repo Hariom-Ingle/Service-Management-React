@@ -2,7 +2,7 @@ import React from "react";
 
 function TermsConditiion() {
   return (
-    <div className=" mt-24">
+    <div className=" mt-24" style={{ height: "90vh"}} >
       <h2 className="text-black p-2 font-semibold">
       Terms and Conditions
       </h2>

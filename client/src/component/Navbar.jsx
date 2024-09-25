@@ -34,11 +34,13 @@ function Navbar() {
       <nav className="  fixed top-0 left-0 right-0 z-50 ">
         <div className=" chetan mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
           <div className="relative flex h-20 items-center justify-between">
-            <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
+            <div className="flex flex-1 items-center justify-between sm:items-stretch sm:justify-start">
               <div className="flex flex-shrink-0 items-center">
                
                 
-                <img src="./images/favicon.ico" alt="" />
+                <img src="./images/favicon.ico" alt="" 
+                onClick={toggleSidePanel}
+                />
 
                 <Link className="logo"
                 to="/">
@@ -102,7 +104,7 @@ function Navbar() {
               <img
                 className="h-8 w-auto"
                 src="/images/favicon.ico"
-                alt="Your Company"
+                alt="Event Horizon"
               />
               <b className="  text-sm logo " style={{fontSize:"1.2rem", color:"cyan"}}>Event Horizon</b>
             </Link>
@@ -121,7 +123,7 @@ function Navbar() {
           <div className="flex items-center justify-between px-4 py-6">
             <div className="flex items-center">
               <div className="h-8 w-8 rounded-full bg-gray-400 flex items-center justify-center mx-3">
-                <span className="text-white uppercase">
+                <span className="text-black uppercase font-serif">
                   {data.username.charAt(0)}
                 </span>
               </div>
@@ -132,6 +134,7 @@ function Navbar() {
           <div className="px-4 py-6 text-white">
             {/* Add your side panel content here */}
             {/* For example: */}
+            
 
             <div className="flex">
               <Link
