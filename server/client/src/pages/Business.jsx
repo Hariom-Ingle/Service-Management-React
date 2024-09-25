@@ -1,10 +1,10 @@
-import React, { useState, useRef, useEffect } from "react";
-import { useForm } from "react-hook-form";
 import JoditEditor from "jodit-react";
-import { useAuth } from "../store/auth";
+import React, { useEffect, useRef, useState } from "react";
+import { useForm } from "react-hook-form";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
-import { useParams, useLocation, useNavigate, Link } from "react-router-dom";
+import { useAuth } from "../store/auth";
 
 const servicesData = [
   "Catering",
@@ -174,7 +174,7 @@ function Business() {
       }
     });
 
-    const url = id ? `http://localhost:5000/api/business/upload/${id}` : `http://localhost:5000/api/business/upload`;
+    const url = id ? `/api/business/upload/${id}` : `http://localhost:5000/api/business/upload`;
 
     try {
       const response = await fetch(url, {

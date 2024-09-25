@@ -7,6 +7,7 @@ const contactRoute = require("./router/contact-router");
 const businessRoute = require("./router/business-router");
 const errorMiddleware = require("./middleware/error-midddleware"); 
 const likeRouter = require("./router/like-router");
+const path = require("path");
 
 // CORS configuration
 const coreOptions = {
@@ -24,6 +25,12 @@ app.use("/api/auth", router);
 app.use("/api/form", contactRoute);
 app.use("/api/business", businessRoute);
 app.use("/api/like", likeRouter); 
+
+
+app.get("/", (req, res) => {
+  app.use(express.static(path.resolve(__dirname, "client", "dist")));
+  res.sendFile(path.resolve(__dirname, "client", "dist", "index.html"));
+  });
 
 // Error handling middleware
 app.use(errorMiddleware);

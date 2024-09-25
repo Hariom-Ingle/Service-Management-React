@@ -67,7 +67,7 @@ export const Home = () => {
 
             {/* Part 2: Image Grid */}
             <div className="image-grid">
-              <img src="/images/herosec.webp" alt="" />
+              <img src="server/client/images/herosec.webp" alt="" />
             </div>
           </div>
         </div>
@@ -132,8 +132,8 @@ export const Home = () => {
             <Link to="/services" className="flex flex-col items-center">
               <button>
                 <img
-                  src="/images/hotel.png"
-                  alt=""
+                  src="server/client/images/hotel.png"
+                  alt="Hotel "
                   className="p-1 border-2 rounded-lg w-24 mt-7"
                 />
               </button>
@@ -143,7 +143,7 @@ export const Home = () => {
               <button>
                 <img
                   src="/images/dress.png"
-                  alt=""
+                  alt="dresss"
                   className="p-1 border-2 rounded-lg w-24 mt-7"
                 />
               </button>

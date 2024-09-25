@@ -28,7 +28,7 @@ export const AuthProvider = ({ children }) => {
   // * JWT authentication - to get the currently logged-in Data
   const userAuthentication = async () => {
     try {
-      const response = await fetch("http://localhost:5000/api/auth/user", {
+      const response = await fetch(`${ window.location.origin}/api/auth/user`, {
         method: "GET",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -57,7 +57,7 @@ export const AuthProvider = ({ children }) => {
   /////*  services fetching  *////
   const fetchAllServices = async () => {
     try {
-      const response = await fetch("http://localhost:5000/api/business/all", {
+      const response = await fetch(`${window.location.origin}/api/business/all`, {
         method: "GET",
       });
 
@@ -75,7 +75,7 @@ export const AuthProvider = ({ children }) => {
   /////*  liking a service  *////
   const likeService = async (serviceId) => {
     try {
-      const response = await fetch("http://localhost:5000/api/like/like", {
+      const response = await fetch(`${window.location.origin}/api/like/like`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -123,7 +123,7 @@ export const AuthProvider = ({ children }) => {
   const deleteService = async (serviceId) => {
     try {
       const response = await fetch(
-        `http://localhost:5000/api/business/delete/${serviceId}`,
+        `${window.location.origin}/api/business/delete/${serviceId}`,
         {
           method: "DELETE",
           headers: {
@@ -156,7 +156,7 @@ export const AuthProvider = ({ children }) => {
 const addReview = async (id, review) => {
   try {
     const token = localStorage.getItem("token"); // Assuming token is stored in local storage
-    await fetch(`http://localhost:5000/api/business/${id}/review`, {
+    await fetch(`${window.location.origin}/api/business/${id}/review`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -172,7 +172,7 @@ const addReview = async (id, review) => {
 
 const fetchServiceReviews = async (id) => {
   try {
-    const response = await fetch(`http://localhost:5000/api/business/all`);
+    const response = await fetch(`${window.location.origin}/api/business/all`);
     const data = await response.json();
     const service = data.find((s) => s._id === id);
     return service.reviews;
